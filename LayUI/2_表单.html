@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+  <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+
+</head>
+<body >
+<form action="" class="layui-form layui-form-pane layui-col-md4 layui-col-md-offset4" style="margin-top:100px">
+  <div class="layui-form-item" >
+    <label for="" class="layui-form-label">输入框</label>
+    <div class="layui-input-block" >
+      <input type="text" name="" required placeholder="lovelover"  class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item" >
+    <label for="" class="layui-form-label">密码框</label>
+    <div class="layui-input-block" >
+      <input type="password" name="" required placeholder="rwewdwq"  class="layui-input" >
+    </div>
+  </div>
+  <div class="layui-form-item" >
+    <label for="" class="layui-form-label">选择框</label>
+    <div class="layui-input-block" >
+      <select name="city" id="" lay-verify="required" lay-search>
+        <option value=""></option>
+        <option value="0">1111</option>
+        <option value="1">222</option>
+        <option value="2">333</option>
+        <option value="3">444</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item" pane>
+    <label for="" class="layui-form-label">复选框</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="like[write]" title="写作">
+      <input type="checkbox" name="like[read]" title="阅读" checked>
+      <input type="checkbox" name="like[sleep]" title="睡觉" checked>
+    </div>
+  </div>
+  <div class="layui-form-item" pane>
+    <label for="" class="layui-form-label" >开关</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="switch" lay-skin="switch">
+    </div>
+  </div>
+  <div class="layui-form-item" pane>
+    <label for="" class="layui-form-label">单选框</label>
+    <div class="layui-input-block">
+      <input type="radio" name="sex" value="男" title="男">
+      <input type="radio" name="sex" value="女" title="女">
+      <input type="radio" name="sex" value="外星人"  title="外星人" checked>
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text" >
+    <label class="layui-form-label"  >文本框</label>
+    <div class="layui-input-block">
+      <textarea name=""  class="layui-textarea" rows="7" cols="50"  placeholder="输入输入" ></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item    layui-col-md-offset3" >
+    <div class="layui-input-block ">
+      <button class="layui-btn" lay-submit lay-filter="demo">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary" >重置</button>
+    </div>
+  </div>
+</form>
+</body>
+</html>

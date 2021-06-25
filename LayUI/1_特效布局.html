@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+
+    <!-- 引入 layui.js -->
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+    <style>
+        .grid-demo{
+        height:100px;
+        text-align:center;
+        font-size:80px;
+        }
+        .layui-icon{
+        color:blue;
+        font-size:100px;
+        }
+        .layui-btn{
+        text-align:center;
+        height:50px;
+        font-size:30px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid">
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+        <div class="grid-demo layui-bg-green layui-anim layui-anim-rotate layui-anim-loop">xxx</div>
+    </div>
+    <div class="layui-col-md8">
+        <div class="grid-demo layui-bg-red">
+            <div class="layui-col-md8">
+                <div class="grid-demo layui-bg-orange "><div class="layui-anim layui-anim-rotate layui-anim-loop ">xxx</div></div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="grid-demo layui-bg-blue"> <i class="layui-icon layui-icon-face-smile"></i></div>
+            </div>
+    </div>
+        <br>
+    <div class="layui-col-md4">
+        <div class="grid-demo layui-bg-red "> <i class="layui-icon layui-icon-heart layui-anim layui-anim-scale layui-anim-loop"></i></div>
+    </div>
+    <div class="layui-col-md4 layui-col-md-offset4">
+        <div class="grid-demo layui-bg-black layui-anim layui-anim-scaleSpring"> <i class="layui-icon layui-icon-loading-1"></i></div>
+    </div>
+</div>
+</div>
+</div>
+<br>
+<i class="layui-icon layui-icon-face-smile layui-anim layui-anim-rotate layui-anim-loop"></i>
+<br>
+<div class="layui-fluid">
+
+<div class="layui-btn layui-btn-primary layui-btn-radius layui-border-blue layui-col-md-offset4">xxxxxxxxxxxxxx</div>
+    <br>
+    <br>
+    <div class="layui-btn  layui-btn-primary  layui-col-md-offset4">awdawdawdx</div>
+</div>
+<br>
+<div class="layui-btn-group layui-col-md4 layui-col-md-offset4">
+    <button class="layui-btn">变大</button>
+    <button class="layui-btn">变小</button>
+    <button class="layui-btn" >并不会变</button>
+</div>
+<br>
+<br>
+
+<div class="layui-btn-container layui-col-md4 layui-col-md-offset4" style="margin-top:20px">
+    <button class="layui-btn">变大</button>
+    <button class="layui-btn">变小</button>
+    <button class="layui-btn">并不会变</button>
+</div>
+</body>
+</html>
