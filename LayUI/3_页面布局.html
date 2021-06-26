@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+<div class="layui-header ">
+
+<ul class="layui-nav " lay-filter="row">
+    <li class="layui-nav-item layui-logo"><a href="">活动</a></li>
+    <li class="layui-nav-item layui-bg-red"><a href="">活动</a></li>
+    <li class="layui-nav-item layui-this"><a href="">产品</a></li>
+    <li class="layui-nav-item"><a href="">大数据</a></li>
+    <li class="layui-nav-item"><a href="javascript:;">解决方案</a>
+    <dl class="layui-nav-child">
+        <dd><a href="" ><i class="layui-icon layui-icon-heart " style="color:red;font-size:30px"></i>模块2</a></dd>
+        <dd><a href="">模块3</a></dd>
+        <dd><a href="">模块1</a></dd>
+    </dl>
+    </li>
+    <li class="layui-nav-item layui-layout-right">社区</li>
+</ul>
+
+
+<div class="layui-side layui-bg-black">
+
+<ul class="layui-nav layui-nav-tree " lay-filter="column">
+<li class="layui-nav-item layui-nav-itemed">
+    <a href="javascrpit:;">默认展开</a>
+    <dl class="layui-nav-child">
+        <a href="">选项2</a>
+        <a href="">选项3</a>
+        <a href="">选项4</a>
+    </dl>
+</li>
+<li class="layui-nav-item ">
+    <a href="javascrpit:;">默认不展开</a>
+    <dl class="layui-nav-child">
+        <a href="">选项2</a>
+        <a href="">选项3</a>
+        <a href="">选项4</a>
+    </dl>
+</li>
+</ul></div>
+</div>
+    <div class="layui-tab-content layui-body">
+        <span class="layui-breadcrumb" lay-separator="">
+        <a href="">首页 <span class="layui-icon layui-icon-heart"></span></a>
+
+          <a href="">国际新闻 <span class="layui-icon layui-icon-face-smile"></span></a>
+          <a href="">亚太地区</a>
+          <a><cite>正文</cite></a>
+    </span>
+        <br>
+    </div>
+
+    <div class="layui-footer">底部</div>
+</div>
+<script>
+    layui.use('element',function(){
+    var element=layui.element;
+    });
+</script>
+</body>
+</html>

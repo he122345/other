@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="margin: 0 0 20px;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>用户管理</li>
+        <li>权限分配</li>
+        <li>商品管理</li>
+        <li>订单管理</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-progress layui-progress-big" lay-showPercent="true" style="width:100px">
+                <div class="layui-progress-bar" lay-percent="60"></div>
+            </div>
+            <div class="layui-progress" lay-showPercent="true" style="width:100px;margin-top:100px">
+                <div class="layui-progress-bar" lay-percent="30%"></div>
+            </div>
+        </div>
+        <div class="layui-tab-item ">
+            <div class="layui-card layui-bg-green layui-anim layui-anim-scaleSpring " style="width:100px">
+                <div class="layui-card-header">张飞</div>
+                <div class="layui-card-body">
+                    <p>cardd</p>
+                    <p>prprprpr</p>
+                </div>
+
+            </div>
+            <div class="layui-card layui-bg-green layui-anim layui-anim-scaleSpring " style="width:100px">
+                <div class="layui-card-header">张飞</div>
+                <div class="layui-card-body">
+                    <p>cardd</p>
+                    <p>prprprpr</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-collapse">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">码码码码码</h2>
+                    <div class="layui-colla-content layui-show">wdawdqdqwd</div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">码码码</h2>
+                    <div class="layui-colla-content ">asd</div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">码</h2>
+                    <div class="layui-colla-content ">wqd</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">内容5</div>
+    </div>
+</div>
+
+<script>
+//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function(){
+  var element = layui.element;
+
+  //…
+});
+</script>
+</body>
+</html>
