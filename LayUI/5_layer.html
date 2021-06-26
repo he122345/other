@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+  <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<div id="id">zzz</div>
+<button id="cl">www</button>
+<br>
+
+<button id="c2" class="layui-btn layui-btn-primary">2</button>
+<br>
+<button id="c3" class="layui-btn layui-btn-primary layui-col-sm-offset4">3</button>
+<br>
+<button id="c4" class="layui-btn layui-btn-primary layui-col-sm-offset4">4</button>
+<br>
+<div id="layer-photos-demo" class="layer-photos-demo">
+<img layer-src="img.png" src="img.png" alt="demo">
+</div>
+<script>
+  layui.use('layer',function(){
+    var layer=layui.layer;
+    var $=layui.jquery;
+    $('#cl').click(function(){
+        layer.open({
+        title: 'false'
+        ,content:$('#id').html()
+        });
+    });
+    $('#c2').click(function(){
+        layer.open({
+        type:2,
+        content:'test.html',
+        skin: 'layui-layer-molv',
+        area:['800px','500px'],
+        success: function(layero, index){
+        var body = layer.getChildFrame('body', index);
+        var iframeWin = window[layero.find('iframe')[0]['name']];
+        body.find('input').val('Hi，我是从父页来的');
+         layer.open({
+        title: 'false'
+        ,content:body.find('div').html()
+        });
+        }
+        });
+    });
+    $('#c3').click(function(){
+        layer.open({
+        title:false,
+        content:'确认？',
+        btn:['是','否'],
+        yes:function(index, layero){
+        $('#c3').remove();
+        layer.close(index);
+        },
+        btn2:function(){
+        layer.alert('xxxxx');
+        },
+        cancel:function(){},
+        btnAlign: 'c'
+        });
+    });
+    layer.ready(function(){
+    layer.msg('关闭后给你看好看的', function(){
+        layer.open({
+        title:false,
+        content:'好看吗？',
+        btn:['好看','yes'],
+        yes:function(index,layer0){
+        layer.open({
+        tile:false,
+        content:"好看！",
+        })
+        },
+        btn2:function(index,layer0){
+        layer.alert('yes！');
+        },
+        });
+    });
+
+    });
+    $('#c4').click(function(){
+    layer.confirm('yse?',function(){
+        layer.msg('yes!');
+        });
+    });
+    layer.tips('只想提示地精准些', '#c3');
+    layer.photos({
+    photos:'#layer-photos-demo',
+    anim:4
+    });
+  });
+</script>
+</body>
+</html>
