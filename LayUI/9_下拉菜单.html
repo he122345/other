@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<button class="layui-btn" id="test1">
+    下拉菜单<i class="layui-icon layui-icon-down layui-font-12"></i>
+</button>
+<style>
+    .site-dropdown-demo,
+    .site-dropdown-demo .layui-menu{background-color: #000; border: none;}
+    .site-dropdown-demo .layui-menu li{color: blue;}
+    .site-dropdown-demo .layui-menu li:hover{background-color: red;}
+ </style>
+<script>
+    layui.use('dropdown',function(){
+        var dropdown=layui.dropdown;
+
+        dropdown.render({
+            elem:'#test1',
+            data:[{
+                title:'菜单1',
+                id:100,
+                herf:'#'},
+                {
+                title:'菜单2',
+                id:101,
+                href:'https://www.baidu.com',
+                target:'_blank'
+                },
+                {
+                title:'菜单3',
+                id:102,
+                type:'group',
+                child:[{
+                    title:'菜单3-1',
+                    id:103,
+                    child:[{
+                    title:'菜单3-1-1',
+                    id:104
+                },{
+                    title:'菜单3-1-2',
+                    id:105}]
+                },{
+                    title:'菜单3-2',
+                    id:106}]
+                }],
+            className: 'site-dropdown-demo',
+            click: function(obj){
+
+            layer.msg(obj.id);
+            }
+        });
+    });
+</script>
+</body>
+</html>

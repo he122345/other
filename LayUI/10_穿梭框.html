@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+  <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<div id="test1"></div>
+<button class="layui-btn layui-btn-primary" id="test2">按钮   12</button>
+<script>
+  layui.use(['transfer','layer'],function(){
+    var transfer=layui.transfer;
+    var layer=layui.layer;
+    var $=layui.jquery;
+
+
+    transfer.render({
+      elem:'#test1',
+      title:['左边','右边'],
+      data:[{"value": "1", "title": "李白", "disabled": "", "checked": ""}
+        ,{"value": "2", "title": "杜甫", "disabled": "", "checked": ""}
+        ,{"value": "3", "title": "贤心", "disabled": "", "checked": ""}],
+      id:'demo1',
+      showSearch:'true',
+      width:'300px',
+      height:'300px',
+      onchange:function(data,index){
+         console.log(data); //得到当前被穿梭的数据
+         console.log(index); //如果数据来自左边，index 为 0，否则为 1
+      }
+    });
+
+
+    $('#test2').click(function(){
+        console.log(transfer.getData('demo1'));
+    });
+  });
+</script>
+</body>
+</html>

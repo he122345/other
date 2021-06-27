@@ -21,12 +21,13 @@
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-            <div class="layui-progress layui-progress-big" lay-showPercent="true" style="width:100px">
+            <div class="layui-progress layui-progress-big" lay-showPercent="true" style="width:100px" lay-filter="test11">
                 <div class="layui-progress-bar" lay-percent="60"></div>
             </div>
             <div class="layui-progress" lay-showPercent="true" style="width:100px;margin-top:100px">
                 <div class="layui-progress-bar" lay-percent="30%"></div>
             </div>
+            <button class="layui-btn" style="margin-top:100px" id="btn">按钮</button>
         </div>
         <div class="layui-tab-item ">
             <div class="layui-card layui-bg-green layui-anim layui-anim-scaleSpring " style="width:100px">
@@ -149,6 +150,12 @@
 //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
 layui.use('element', function(){
   var element = layui.element;
+  var $=layui.jquery;
+
+  $('#btn').click(function(){
+    console.log('1');
+    element.progress('test11', '50%');
+  });
 
   //…
 });

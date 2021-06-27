@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+
+</head>
+<body>
+<button class="layui-btn layui-btn-primary" id="test1">
+  <i class="layui-icon layui-icon-upload"></i>上传
+
+</button>
+<button class="layui-btn layui-btn-primary" id="test2">
+  确认上传
+
+</button>
+
+
+<script>
+  layui.use('upload',function(){
+    var upload=layui.upload;
+
+    var uploadInst=upload.render({
+      elem:'#test1',
+      url:'', //接口
+      done:function(res){},  //回调
+      error:function(){},  //
+      accept:'file',  //文件类型 images|file|vedio|audio
+      acceptMime:'image/*',   //'image/jpg,image/png'  显示的文件类型
+      exts:'png|jpg',   //允许的文件后缀名
+      auto:'false',   //自动上传
+      bindAction:'#test2', //确认上传
+      multiple:'true', //多文件上传
+      number:'3',   //文件数量限制   0不限制
+      drag:'true',   //拖拽上传
+      size:'2048'   //KB
+      //choose 选择后回调   before  上传前回调   done上传后回调   error 报错回调
+    });
+  });
+</script>
+</body>
+</html>
