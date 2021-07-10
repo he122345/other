@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="test1">
+    <span @click="reverseMessage">{{message}}</span>   <!只能包含单个表达式>
+    <br>
+    <span v-if="xok">{{10+19}}</span>
+    <br>
+    <span>{{ok?'yes':'no'}}</span>
+   <span v-html="message" v-bind:style="'font-size:'+isSize+';display:'+isDisplay"></span>
+    <br>
+    <span v-for="arr in arrs">{{arr.text}}</span>
+
+</div>
+<script>
+  const HelloApp={
+    data(){
+      return{
+        message:'<span style="color:red">red</span>',
+        isDisplay:'none',
+        isSize:'30px',
+        ok:true,
+        xok:false,
+        arrs:[{text:'123'},{text:'3445'}]
+      }
+    },
+    methods:{
+      reverseMessage(){
+        this.message=this.message.split('').reverse().join('')
+      }
+    }
+  }
+  Vue.createApp(HelloApp).mount('#test1')
+  document.write('<br>')
+  document.write('111111111')
+</script>
+</body>
+</html>

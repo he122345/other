@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+  <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+    <style type="text/css">
+    #panel,#flip
+    {
+        padding:5px;
+        text-align:center;
+        background-color:#e5eecc;
+        border:solid 1px black;
+    }
+    #panel
+    {
+        padding:50px;
+        display:none;
+    }
+
+    </style>
+</head>
+<body>
+<div style="height:30px">
+<p id="test0" >If you click on me, I will disappear.</p>
+</div>
+
+<div style="margin-top:20px">
+
+<p  id="test1" >If you click on me, I will disappear.</p>
+<p class="demo1">If you click on me, I will disappear.</p>
+<p id="test3">If you click on me, I will disappear.</p>
+<p id="test4">If you click on me, I will disappear.</p>
+    <br>
+<button class="layui-btn" id="test5">aaaaa</button>
+</div>
+<br>
+<input type="text" class="layui-input" id="test2">
+<div id="flip">点我，显示或隐藏面板。</div>
+<div id="panel">Hello world!</div>
+<script>
+var $=layui.jquery;
+  $("#test0").dblclick(function(){
+  $('#test1').toggle(1000);
+  $('#test3').fadeOut(1000);
+  $('#test3').fadeIn(3000);
+  $('#test5').remove();  //括号内可添加选择器
+
+  });
+  $("p.demo1").click(function(){
+  $(this).css({'color':'red','font-size':'30px'});
+  $('#test4').fadeToggle(3000);
+  $('#test5').fadeTo("slow",0.3);
+
+  });
+  //$(document).ready();
+  //
+  $("p#test1").click(function(){
+  $(this).css('margin-left','100px');
+  $("#test2").focus();
+  });
+  $("#flip").click(function(){
+  $("#panel").slideToggle("slow");
+  alert($("#test1").attr("id"));
+  });
+  $("#test5").click(function(){
+  $(this).toggleClass('layui-btn');
+  });
+</script>
+</body>
+</html>

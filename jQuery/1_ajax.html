@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+<table class="layui-table"id="demo1"></table>
+<button id="btn">按钮</button>
+<script>
+    var $=layui.jquery;
+    $('#btn').click(function(){
+        $.ajax({
+       
+        //url:'https://api.bilibili.com/x/relation?callback=jQuery1720948807129079209_1624849783554&fid=4693233&jsonp=jsonp&_=1624850381399',
+        url:'https://www.baidu.com',
+
+        dataType: "jsonp",
+        success:function(res){
+            console.log(res);
+            $('#test1').html(res);
+        }
+        })
+    });
+</script>
+
+</body>
+</html>

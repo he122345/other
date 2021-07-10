@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+<body>
+<div id="test1"></div>
+<script>
+  const app=Vue.createApp({
+    data(){
+      return{
+        count:3
+      }
+    },
+    methods:{
+      increase(){
+        this.count++
+      }
+    }
+  })
+  const vm=app.mount('#test1')
+  document.write(vm.$data.count)
+  document.write('<br>')
+  document.write(vm.count)
+  vm.count++
+  document.write('<br>')
+  document.write(vm.count)
+  vm.$data.count++
+  document.write('<br>')
+  document.write(vm.count)
+  document.write('<br>')
+  vm.increase()
+  document.write(vm.count)
+</script>
+
+</body>
+</html>
