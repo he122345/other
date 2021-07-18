@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+  <p style="font-size:25px">计数器:{{counter}}</p>
+  <button @click="counter++" style="font-size:25px">点击</button>
+</div>
+<div id="trans">
+  <input type="text" v-model="kilometers">
+  <input type="text" v-model="meters">
+</div>
+<p id="info"></p>
+<script>
+  var vm=new Vue({
+    el:'#app',
+    data:{
+      counter:1,
+    },
+  });
+  vm.$watch('counter',function(nval,oval){
+    alert('原来的：'+oval+',新的：'+nval);
+  });
+  var va=new Vue({
+    el:'#trans',
+    data:{
+      kilometers:0,
+      meters:0,
+    },
+    watch:{
+      kilometers:function(val){
+        this.kilometers=val;
+        this.meters=this.kilometers*1000;
+      },
+      meters:function(val){
+        this.meters=val;
+        this.kilometers=this.meters/1000;
+      },
+    },
+  });
+  va.$watch('kilometers',function(nval,oval){
+    document.getElementById('info').innerHTML='修改前:'+oval+',修改后：'+nval;
+  });
+</script>
+</body>
+</html>

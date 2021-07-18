@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(value,key) in object">
+            {{key}}:{{value}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="(value,key,index) in object">
+            {{index}}.{{key}}:{{value}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="n in 4">{{n}}</li>
+    </ul>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            object:{
+                name:'菜鸟',
+                url:'www.baidu.com',
+                slogan:'这里是提示',
+            },
+        },
+    })
+</script>
+</body>
+</html>

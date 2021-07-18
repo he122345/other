@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<! computed依赖于缓存，methods重新渲染总会执行>
+<div id="app">
+  {{message.split('').reverse().join('')}}
+  <br>
+  {{reversedMessage}}
+  <br>
+  {{site}}
+</div>
+<script>
+  var vm=new Vue({
+    el:'#app',
+    data:{
+      message:'hellow',
+      name:'hhhe',
+      url:'www.google.com',
+    },
+    computed:{
+      reversedMessage:function(){
+        return this.message.split('').reverse().join('');
+      },
+      site:{
+        get:function(){
+          return this.name+' '+this.url;
+        },
+        set:function(newValue){
+          var names=newValue.split(' ');
+          this.name=names[0];
+          this.url=names[names.length-1];
+        },
+      },
+    },
+  });
+  vm.site='he www.baidu.com';
+  document.write('name:'+vm.name);
+  document.write('<br>');
+  document.write('name:'+vm.url);
+
+</script>
+</body>
+</html>
