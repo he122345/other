@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<style>
+  .base{
+    width:100px;
+    height:100px;
+  }
+  .active{
+    background:green;
+  }
+  .text-danger{
+    background:yellow;
+  }
+</style>
+<body>
+<div id="app">
+  <div v-bind:class="{'active':isActive,'text-danger':hasError}"></div>
+  <br>
+  <div v-bind:class="classObject"></div>
+</div>
+<div id="app1">
+  <div v-bind:class="classObject"></div>
+</div>
+<br>
+<div id="app2">
+  <div v-bind:style="[styleObject,styleObject1]">HHHHHH</div>
+</div>
+<script>
+  new Vue({
+    el:'#app',
+    data:{
+      isActive:1,
+      hasError:1,
+      classObject:{
+        active:1,
+        'text-danger':1,
+      },
+    },
+  });
+  document.write('<br>');
+  new Vue({
+    el:'#app1',
+    data:{
+      isActive:1,
+      error:{
+        value:1,
+        type:'fatal',
+      },
+    },
+    computed:{
+      classObject:function(){
+        return {
+          base:1,
+          active:this.isActive&&this.error.value,
+          'text-danger':this.error.value && !this.error.type === 'fatal',
+        }
+      },
+    },
+  });
+  new Vue({
+    el:'#app2',
+    data:{
+      styleObject:{
+        color:'blue',
+        fontSize:'50px',
+      },
+      styleObject1:{
+        'font-weight':'bold',
+      },
+    },
+  });
+</script>
+</body>
+</html>
