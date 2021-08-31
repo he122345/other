@@ -1,6 +1,7 @@
 from ctypes import sizeof
 from math import floor
 from random import random, uniform
+import main
 
 
 def reverseWords(input):
@@ -46,4 +47,7 @@ if __name__ == "__main__":
     k={'a':1,'b':2,'c':3,'d':4}
     for key,value in k.items():
         print(key,value)
+
+    dir()
+
 
