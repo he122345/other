@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../Highcharts/code/css/highcharts.css">
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../Highcharts/code/highcharts.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <style>
+        .layui-table-cell {height:auto;overflow:visible;}
+    </style>
+</head>
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">工资管理系统</div>
+      <ul class="layui-nav">
+        <li class="layui-nav-item" style="margin-left:200px">
+          <button class="layui-btn" style="margin-left:20px" id="insert">新增工人</button>
+        </li>
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item"style="width:180px">
+          <input type="text" id="findMonth" class="layui-input" style="margin-top:1px;width:150px"  placeholder="输入月份查询">
+        </li>
+        <li class="layui-nav-item" style="width:180px">
+          <input type="text" id="findId" class="layui-input" style="margin-top:1px;width:150px"  placeholder="输入工人编号查询">
+        </li>
+        <li class="layui-nav-item">
+          <button class="layui-btn" style="margin-left:20px" id="find">查询</button>
+        </li>
+      </ul>
+    </div>
+    <div class="layui-body" style="margin-left:-200px">
+      <img src="" alt="" id="use" style="width:100px;height:100px" >
+      <table class="layui-hide" id="test" lay-filter="test"></table>
+      <br>
+      <div id="container"></div>
+      <div id="container2"></div>
+    </div>
+    <div class="layui-footer" style="margin-left:-200px">底部固定区域</div>
+  </div>
+  <input type="hidden" id="Count">
+  <button id="upload"></button>
+  <input type="hidden" id="name">
+
+</body>
+<script>
+  var tableInit = function(url){//url代表的是渲染表格的请求路径
+    layui.use(['table','form','util','upload'], function(){
+      var $ = layui.$;
+      var table = layui.table;
+      var form=layui.form;
+      var util = layui.util;
+      var upload = layui.upload;
+      $("#use").hide();
+      $.ajax({
+        url:"http://localhost:8089/show/count",
+        success:function(res){
+          $('#Count').val(res);
+        }
+      });
+      //表格接口
+      table.render({
+        elem: '#test'
+        ,url: url
+        ,parseData: function(res){
+            return {
+              "code": 0,
+              "msg": "OK",
+              "count":$('#Count').val(),
+              "data": res
+            };
+        }
+        ,cellMinWidth: 80
+        ,page:{
+          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip']
+          ,limit:5
+          ,limits:[5,10,15]
+          ,groups: 3
+          ,first: "首页"
+          ,last: "尾页"
+        }
+        ,cols: [[
+          {field:'id', width:100, title: '编号', sort: true}
+          ,{field:'name', width:100, title: '姓名',sort: true,edit:'text'}
+          ,{field:'photo', width:130, title: '照片',templet: '#titleTpl',event:'setPhoto'}
+          ,{field:'age', width:100, title: '年龄',sort: true,edit:'text',edit:'text'}
+          ,{field:'phone', width:120, title: '电话',edit:'text'}
+          ,{field:'month', width:100, title: '月份',sort:true}
+          ,{field:'salary', width:100, title: '月工资',sort: true}
+          ,{field:'days', width:100, title: '出勤天数',sort: true,edit:'text'}
+          ,{field:'overtime_type', width:100, title: '加班类型',templet: '#titleTplType'}
+          ,{field:'overtime_days', width:120, title: '加班天数',sort: true,edit:'text'}
+          ,{field:'subsidy', width:100, title: '津贴',sort: true}
+          ,{field:'kind', width:100, title: '工种',sort: true,templet: '#titleTplKind'}
+          ,{field:'level', width:100, title: '等级',sort: true,templet: '#titleTplLevel'}
+          ,{field:'department', width:100, title: '部门',sort: true,templet: '#titleTplDepartment'}
+          ,{field:'basic_salary', width:120, title: '基本工资',sort: true,edit:'text'}
+          ,{fixed: 'right',title:'工具栏', height:100,width:150, align:'center', toolbar: '#barDemo'}
+        ]]
+      });
+
+      //工具栏监听
+      table.on('tool(test)', function(obj){
+        var data = obj.data;//得到行数据
+        var layEvent = obj.event;//得到点击事件
+        var tr = obj.tr;//得到行对象
+        if(layEvent === 'update'){
+          //验证更新的数据
+          //验证name格式
+          var regName =/^[\u4E00-\u9FFF]{0,3}$/g;
+          if(!regName.test(data.name)){
+            layer.msg("名字应在3个汉字以内");
+            return false;
+          }
+          //验证年龄
+          var regAge =/^\d{0,2}$/g;
+          if(!regAge.test(data.age)){
+            layer.msg("年龄应在0-99之间");
+            return false;
+          }
+          //验证电话号码
+          var regPhone =/^\d{11}$/g;
+          if(!regPhone.test(data.phone)){
+            layer.msg("请输入11位电话号码");
+            return false;
+          }
+          //验证加班天数和出勤天数
+          var regDay =/^\d{0,2}$/g;
+          if(!regDay.test(data.days)){
+            layer.msg("出勤天数有误");
+            return false;
+          }
+          //更新匹配索引，每次从第一个字符串开始匹配
+          regDay.lastIndex=0;
+          if(!regDay.test(data.overtime_days)){
+            layer.msg("加班天数有误");
+            return false;
+          }
+          if(Number(data.overtime_days)+Number(data.days)>31){
+            layer.msg("加班天数与出勤天数的和不能超过31");
+            return false;
+          }
+          //验证基本工资
+          var regBasic =/^\d{0,5}$/g;
+          if(!regBasic.test(data.basic_salary)){
+            layer.msg("基本工资应该在0-99999之间");
+            return false;
+          }
+          //如果预览框为空，则预览现有的图片
+          if($('#use').attr('src')=="") $('#use').attr('src',data.photo);
+          $.ajax({
+            url:"http://localhost:8089/show/findById/"+data.month+"/"+data.id+"?page=1&limit=5",
+            success:function(res){
+              //如果工种信息发生改变
+              if($("#selectKind"+data.id).val()!=res[0].kind||$("#selectLevel"+data.id).val()!=res[0].level||$("#selectDepartment"+data.id).val()!=res[0].department||data.basic_salary!=res[0].basic_salary){
+                data.kind=$("#selectKind"+data.id).val();
+                data.level=$("#selectLevel"+data.id).val();
+                data.department=$("#selectDepartment"+data.id).val();
+                $.ajax({
+                  type: "get",
+                  url: "http://localhost:8089/type/update",
+                  data: {"id":data.id,"kind":data.kind,"level":data.level,"department":data.department,"basic_salary":data.basic_salary},
+                  dataType: "json",
+                  success:function(res){
+                    if(res==1) {
+                      layer.msg('修改成功1');
+                      location.reload();
+                    }
+                    else layer.msg('修改失败1');
+                  }
+                });
+              }
+              //如果加班类型发生改变，或者工作时长发生改变，更新数据，并重新计算工资
+              if($('#selectType'+data.id).val()!=res[0].overtime_type||data.overtime_days!=res[0].overtime_days||data.days!=res[0].days||data.basic_salary!=res[0].basic_salary){
+                data.overtime_type=$("#selectType"+data.id).val();
+                if(data.overtime_type=="晚班") {var subsidy=data.overtime_days*200;}
+                else if(data.overtime_type=="白班") {var subsidy=data.overtime_days*150;}
+                else {
+                  var subsidy=0;
+                  data.overtime_days=0;
+                }
+                $.ajax({
+                  type: "get",
+                  url: "http://localhost:8089/subsidy/update",
+                  data: {"id":data.id,"month":data.month,"overtime_type":data.overtime_type,"overtime_days":data.overtime_days,"subsidy":subsidy},
+                  dataType: "json",
+                  success:function(res){
+                    if(res==1){
+                      var salary=Number(data.basic_salary)+Number(subsidy)+Number((data.days-20)*100);
+                      $.ajax({
+                        type: "get",
+                        url: "http://localhost:8089/salary/update",
+                        data: {"id":data.id,"month":data.month,"salary":salary},
+                        dataType: "json",
+                        success: function(msg1){
+                          if(msg1==1){
+                            $.ajax({
+                              type: "get",
+                              url: "http://localhost:8089/attendance/update",
+                              data: {"id":data.id,"month":data.month,"days":data.days},
+                              dataType: "json",
+                              success: function(msg2){
+                                if(msg2==1){
+                                  layer.msg('修改成功2');
+                                  location.reload();
+                                }
+                                else layer.msg('修改失败2');
+                              }
+                            });
+                          }
+                          else layer.msg('修改失败3');
+                        }
+                      });
+                    }
+                  }
+                });
+              }
+              //如果个人信息发生改变
+              if(data.name!=res[0].name||data.age!=res[0].age||data.phone!=res[0].phone||($('#use').attr('src')!=res[0].photo&&$('#use').attr('src')!="")){
+                $.ajax({
+                  type: "post",
+                  url: "http://localhost:8089/message/update",
+                  data: {"id":data.id,"name":data.name,"photo":$('#use').attr('src'),"age":data.age,"phone":data.phone},
+                  dataType: "json",
+                  success: function(msg){
+                    $('#use').hide();
+                    if(msg==1) {
+                      layer.msg('修改成功3');
+                      location.reload();
+                    }
+                    else  layer.msg('修改失败4');
+                  }
+                });
+              }
+              //判断行数据是否发生改变
+              var flag=1;
+              for(var key in data){
+                if(data[key]!=res[0][key]||$('#use').attr('src')!=res[0].photo) flag=0;
+              };
+              if(flag==1) layer.msg('未更改数据');
+            },
+          });
+        }
+        //删除数据
+        else if(layEvent === 'del'){ //删除
+          layer.confirm('真的删除么', function(index){
+            obj.del();
+            layer.close(index);
+            var id= data.id;
+            $.ajax({
+              url:"http://localhost:8089/attendance/del/"+id,
+              success:function(res){
+                if(res==1){
+                  $.ajax({
+                    url:"http://localhost:8089/salary/del/"+id,
+                    success:function(res){
+                      if(res==1){
+                        $.ajax({
+                          url:"http://localhost:8089/subsidy/del/"+id,
+                          success:function(res){
+                            if(res==1){
+                              $.ajax({
+                                url:"http://localhost:8089/type/del/"+id,
+                                success:function(res){
+                                  if(res==1){
+                                    $.ajax({
+                                      url:"http://localhost:8089/message/del/"+id,
+                                      success:function(res){
+                                        if(res==1) {
+                                          layer.msg('删除成功');
+                                          location.reload();
+                                        }
+                                        else layer.msg('员工删除失败');
+                                      }
+                                    });
+                                  }
+                                  else layer.msg('工种信息删除失败');
+                                }
+                              });
+                            }
+                            else layer.msg('津贴数据删除失败');
+                          }
+                        });
+                      }
+                      else layer.msg('月工资数据删除失败');
+                    }
+                  });
+                }
+                else layer.msg('出勤数据删除失败');
+			  }
+            });
+          });
+        }
+        //触发上传图片
+        else if(obj.event === 'setPhoto'){
+          $("#upload").click();
+        }
+      });
+    });
+  }
+  //查询所有数据
+  tableInit("http://localhost:8089/show/findAll/"+0);
+  layui.use(['layer','upload'], function(){
+    var $ = layui.$
+    ,layer = layui.layer
+    ,upload=layui.upload;
+    //查询事件
+    $("#find").on('click',function(){
+      var id = $("#findId").val();
+      var month=$("#findMonth").val();
+      if(id==''&&month!='') tableInit("http://localhost:8089/show/findAll/"+month);
+      else if(month==''&&id!='') tableInit("http://localhost:8089/show/findById/"+0+"/"+id);
+      else if(month==''&&id=='') tableInit("http://localhost:8089/show/findAll/"+0);
+      else tableInit("http://localhost:8089/show/findById/"+month+"/"+id);
+      if(id=="") Fun(1);
+      else Fun(id);
+    })
+    //新增工人
+    $("#insert").on('click',function(){
+      var index=layer.open({
+        type:2,
+        title:'新增工人',
+        area:['500px','300px'],
+        content:'http://localhost:8089/insert.html',
+      });
+    })
+    //上传图片监听
+    upload.render({
+      elem: '#upload'
+      ,url: '#'
+      ,size:1536
+      ,auto: false
+      ,bindAction: ''
+      ,choose: function(obj){
+        layer.msg('图片选择成功');
+        var files = obj.pushFile();
+        obj.preview(function(index, file, result){
+          $('#use').show();
+          //result是图片的base64编码
+          $('#use').attr('src',result);
+        });
+      }
+    });
+  });
+
+  //数据可视化
+  function Fun(id) {
+    //将每月工资转化为数组
+    var monthSalaryData=[];
+    for(var i=1;i<13;i++){
+      $.ajax({
+        url:"http://localhost:8089/salary/findById?id="+id+"&month="+i,
+        async: false,
+        success:function(res){
+          monthSalaryData[i-1]=res[0].salary;
+        }
+      });
+    };
+    // 全局配置，针对页面上所有图表有效
+    Highcharts.setOptions({
+        chart: {
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(255, 255, 255)'],
+                    [1, 'rgb(240, 240, 255)']
+                ]
+            },
+            borderWidth: 2,
+            plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+            plotShadow: true,
+            plotBorderWidth: 1
+        }
+    });
+    var chart1 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+        },
+         title: {
+              text: '每月的工资'                 // 标题
+          },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: '月工资'                // y 轴标题
+            }
+        },
+        series: [{
+            name:"员工",
+            data:monthSalaryData,
+        }]
+    });
+  }
+  Fun(1);
+</script>
+<script type="text/html" id="barDemo">
+  <div style="height:100px;" id="vue">
+    <div style="padding-top:35px">
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+      <a class="layui-btn layui-btn-xs" lay-event="update" id="update{{d.id}}" >修改</a>
+    </div>
+  </div>
+</script>
+<script type="text/html" id="titleTpl">
+  <img src="{{d.photo}}" id="photo{{d.id}}" style="width:100px;height:100px">
+</script>
+<script type="text/html" id="titleTplKind">
+  <select name="kind" id="selectKind{{d.id}}" style="width:200px;">
+    <option value="{{d.kind}}" selected="selected">{{d.kind}}</option>
+    <option value="程序员">程序员</option>
+    <option value="设计师">设计师</option>
+    <option value="">空</option>
+  </select>
+</script>
+<script type="text/html" id="titleTplType">
+    <select name="overtime_type" id="selectType{{d.id}}" >
+      <option value="{{d.overtime_type}}" selected>{{d.overtime_type}}</option>
+      <option value="白班">白班</option>
+      <option value="晚班">晚班</option>
+      <option value="">空</option>
+    </select>
+</script>
+<script type="text/html" id="titleTplLevel">
+  <select name="level" id="selectLevel{{d.id}}" >
+    <option value="{{d.level}}" selected>{{d.level}}</option>
+    <option value="低">低</option>
+    <option value="中">中</option>
+    <option value="高">高</option>
+    <option value="">空</option>
+  </select>
+</script>
+<script type="text/html" id="titleTplDepartment">
+  <select name="department" id="selectDepartment{{d.id}}" >
+    <option value="{{d.department}}" selected>{{d.department}}</option>
+    <option value="开发">开发</option>
+    <option value="商业">商业</option>
+    <option value="">空</option>
+  </select>
+</script>
+</html>
